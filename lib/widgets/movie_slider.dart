@@ -42,7 +42,8 @@ class _MoviePoster extends StatelessWidget {
       height: 190,
       // color: Colors.green,
       margin: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
+      child: ListView(children: [
+        Column(
         children: [
           GestureDetector(
             onTap: () => Navigator.pushNamed(context, 'details',
@@ -69,6 +70,7 @@ class _MoviePoster extends StatelessWidget {
           )
         ],
       ),
+      ])
     );
   }
 }
