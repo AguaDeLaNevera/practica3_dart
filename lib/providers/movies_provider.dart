@@ -3,7 +3,7 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
 class MoviesProvider extends ChangeNotifier{
-  String _baseUrl = 'api.themovidedb.org';
+  String _baseUrl = 'api.themoviededb.org';
   String _apiKey = '26b58aa103d32090e635bac29bc129fb';
   String _language = 'es-ES';
   String _page = '1';
