@@ -1,13 +1,13 @@
 // To parse this JSON data, do
 //
-//     final movieResponse = movieResponseFromJson(jsonString);
+//     final movieRespon(jsonString);
 
 import 'models.dart';
 
-NowPlayingResponse movieResponseFromJson(String str) =>
+NowPlayingResponse nowPlayingResponseFromJson(String str) =>
     NowPlayingResponse.fromJson(json.decode(str));
 
-String movieResponseToJson(NowPlayingResponse data) => json.encode(data.toJson());
+String nowPlayingResponseToJson(NowPlayingResponse data) => json.encode(data.toJson());
 
 class NowPlayingResponse {
   Dates dates;
@@ -24,6 +24,7 @@ class NowPlayingResponse {
     required this.totalResults,
   });
 
+  
   factory NowPlayingResponse.fromJson(Map<String, dynamic> json) => NowPlayingResponse(
         dates: Dates.fromJson(json["dates"]),
         page: json["page"],
