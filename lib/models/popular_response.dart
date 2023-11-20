@@ -1,6 +1,38 @@
+import 'dart:convert';
 import 'models.dart';
+class PopularResponse {
+    int page;
+    List<Movie> Movies;
+    int totalPages;
+    int totalResults;
 
-class Movie {
+    PopularResponse({
+        required this.page,
+        required this.Movies,
+        required this.totalPages,
+        required this.totalResults,
+    });
+
+    factory PopularResponse.fromJson(String str) => PopularResponse.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory PopularResponse.fromMap(Map<String, dynamic> json) => PopularResponse(
+        page: json["page"],
+        Movies: List<Movie>.from(json["results"].map((x) => Movie.fromJson(x))),
+        totalPages: json["total_pages"],
+        totalResults: json["total_results"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "page": page,
+        "results": List<dynamic>.from(Movies.map((x) => x.toMap())),
+        "total_pages": totalPages,
+        "total_results": totalResults,
+    };
+}
+
+class Result {
     bool adult;
     String backdropPath;
     List<int> genreIds;
@@ -16,15 +48,7 @@ class Movie {
     double voteAverage;
     int voteCount;
 
-    get fullPosterPath {
-      if (this.posterPath != null) {
-        return 'https://image.tmdb.org/t/p/w500${posterPath}';        
-      } else {
-        return 'https://i.stack.imgur.com/GNhxO.png';
-      }
-    }
-
-    Movie({
+    Result({
         required this.adult,
         required this.backdropPath,
         required this.genreIds,
@@ -41,11 +65,11 @@ class Movie {
         required this.voteCount,
     });
 
-    factory Movie.fromRawJson(String str) => Movie.fromJson(json.decode(str));
+    factory Result.fromJson(String str) => Result.fromMap(json.decode(str));
 
-    String toRawJson() => json.encode(toJson());
+    String toJson() => json.encode(toMap());
 
-    factory Movie.fromJson(Map<String, dynamic> json) => Movie(
+    factory Result.fromMap(Map<String, dynamic> json) => Result(
         adult: json["adult"],
         backdropPath: json["backdrop_path"],
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
@@ -62,24 +86,7 @@ class Movie {
         voteCount: json["vote_count"],
     );
 
-    Map<String, dynamic> toJson() => {
-        "adult": adult,
-        "backdrop_path": backdropPath,
-        "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
-        "id": id,
-        "original_language": originalLanguage,
-        "original_title": originalTitle,
-        "overview": overview,
-        "popularity": popularity,
-        "poster_path": posterPath,
-        "release_date": "${releaseDate.year.toString().padLeft(4, '0')}-${releaseDate.month.toString().padLeft(2, '0')}-${releaseDate.day.toString().padLeft(2, '0')}",
-        "title": title,
-        "video": video,
-        "vote_average": voteAverage,
-        "vote_count": voteCount,
-    };
-
-        Map<String, dynamic> toMap() => {
+    Map<String, dynamic> toMap() => {
         "adult": adult,
         "backdrop_path": backdropPath,
         "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
