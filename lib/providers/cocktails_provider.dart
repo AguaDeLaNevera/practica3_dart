@@ -1,55 +1,37 @@
 import 'package:flutter/material.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
-import 'package:movies_app/models/models.dart';
-import 'package:movies_app/models/movie.dart';
-import 'package:movies_app/models/now_playing_response.dart';
-import 'package:movies_app/models/popular_response.dart';
-
-import '../models/cast.dart';
+import 'package:movies_app/models/drink.dart';
 
 
-class MoviesProvider extends ChangeNotifier{
-  String _baseUrl = 'api.themoviedb.org';
-  String _apiKey = '26b58aa103d32090e635bac29bc129fb';
-  String _language = 'es-ES';
-  String _page = '1';
+class CocktailsProvider extends ChangeNotifier{
+  String _baseUrl = 'www.thecocktaildb.com/api/json/v1';
 
-  List<Movie> onDisplayMovies = [];
-  List<Movie> onPopular = [];
+  List<Drink> onDisplayCocktail = [];
+  List<Drink> onDisplayNoAlcohol = [];
 
-  Map<int, List <Cast>> casting = {};
-
-  MoviesProvider() {
+  CocktailsProvider() {
     print('Movies Provider inicialitzat!');
-    this.getOnDisplayedMovies();
-    this.getPopularMovies();
+    this.getOnDisplayedCocktails();
+    this.getOnDisplayedNoAlcoholCocktails();
   }
 
-  getOnDisplayedMovies() async {
+  getOnDisplayedCocktails() async {
     var url =
-      Uri.https(_baseUrl, '/3/movie/now_playing', {
-          'api_key': _apiKey,
-          'language': _language,
-          'page': _page
-        });
+      Uri.https(_baseUrl, '/1/filter.php?a=Alcoholic');
 
     // Await the http get response, then decode the json-formatted response.
     final result = await http.get(url);
     var jsonResponse = convert.jsonDecode(result.body) as Map<String, dynamic>;
     final nowPlayingResponse = NowPlayingResponse.fromJson(jsonResponse);
     
-    onDisplayMovies = nowPlayingResponse.Movies;
+    onDisplayCocktail = nowPlayingResponse.Movies;
     notifyListeners();
   }
 
-  getPopularMovies() async {
+  getOnDisplayedNoAlcoholCocktails() async {
     var url =
-      Uri.https(_baseUrl, '/3/movie/popular', {
-          'api_key': _apiKey,
-          'language': _language,
-          'page': _page
-        });
+      Uri.https(_baseUrl, '/1/filter.php?a=Non_Alcoholic');
 
     // Await the http get response, then decode the json-formatted response.
     final result = await http.get(url);
@@ -57,7 +39,7 @@ class MoviesProvider extends ChangeNotifier{
     final nowPlayingResponse = PopularResponse.fromMap(jsonResponse);
     
 
-    onPopular = nowPlayingResponse.Movies;
+    onDisplayNoAlcohol = nowPlayingResponse.Movies;
     notifyListeners();
   }
 
@@ -65,7 +47,6 @@ class MoviesProvider extends ChangeNotifier{
     var url =
       Uri.https(_baseUrl, '/3/movie/$id/credits', {
           'api_key': _apiKey,
-          'language': _language,
         });
 
     final result = await http.get(url);
