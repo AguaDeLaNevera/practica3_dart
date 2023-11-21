@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/models/drink.dart';
 
 class CardSwiper extends StatelessWidget {
-
   final List<Drink> drinks;
 
   const CardSwiper({super.key, required this.drinks});
@@ -15,7 +14,7 @@ class CardSwiper extends StatelessWidget {
     if (this.drinks.length == 0) {
       return Container(
         width: double.infinity,
-        height: size.height*0.5,
+        height: size.height * 0.5,
         child: Center(
           child: CircularProgressIndicator(),
         ),
@@ -35,13 +34,13 @@ class CardSwiper extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             final drink = drinks[index];
             return GestureDetector(
-              onTap: () => Navigator.pushNamed(context, 'details',
-                  arguments: drink),
+              onTap: () =>
+                  Navigator.pushNamed(context, 'details', arguments: drink),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: FadeInImage(
                     placeholder: AssetImage('assets/no-image.jpg'),
-                    image: NetworkImage(drink.fullPosterPath),
+                    image: NetworkImage(drink.strDrinkThumb),
                     fit: BoxFit.cover),
               ),
             );

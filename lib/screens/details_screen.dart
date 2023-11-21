@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/models/movie.dart';
+import 'package:movies_app/models/models.dart';
 import 'package:movies_app/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: Canviar després per una instància de Peli
-    final Movie peli =
-        ModalRoute.of(context)?.settings.arguments as Movie;
+    final Drink beguda = ModalRoute.of(context)?.settings.arguments as Drink;
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _CustomAppBar(movie: peli,),
+          _CustomAppBar(
+            drink: beguda,
+          ),
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                _PosterAndTitile(movie: peli,),
-                _Overview(movie: peli,),
-                CastingCards(peli.id),
+                _PosterAndTitile(
+                  drink: beguda,
+                ),
+                _Overview(
+                  drink: beguda,
+                ),
+                CastingCards(beguda.idDrink as int),
               ],
             ),
           ),
@@ -29,9 +34,9 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class _CustomAppBar extends StatelessWidget {
-  final Movie movie;
+  final Drink drink;
 
-  const _CustomAppBar({super.key, required this.movie});
+  const _CustomAppBar({super.key, required this.drink});
   @override
   Widget build(BuildContext context) {
     // Exactament igual que la AppBaer però amb bon comportament davant scroll
@@ -49,13 +54,13 @@ class _CustomAppBar extends StatelessWidget {
           color: Colors.black12,
           padding: const EdgeInsets.only(bottom: 10),
           child: Text(
-            movie.title,
+            drink.strDrink,
             style: TextStyle(fontSize: 16),
           ),
         ),
         background: FadeInImage(
           placeholder: AssetImage('assets/loading.gif'),
-          image: NetworkImage(movie.fullPosterPath),
+          image: NetworkImage(drink.strDrinkThumb),
           fit: BoxFit.cover,
         ),
       ),
@@ -64,75 +69,73 @@ class _CustomAppBar extends StatelessWidget {
 }
 
 class _PosterAndTitile extends StatelessWidget {
-  final Movie movie;
+  final Drink drink;
 
-  const _PosterAndTitile({super.key, required this.movie});
+  const _PosterAndTitile({super.key, required this.drink});
 
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
-      margin: const EdgeInsets.only(top: 20),
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-  children: [
-    Expanded(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: FadeInImage(
-          placeholder: AssetImage('assets/loading.gif'),
-          image: NetworkImage(movie.fullPosterPath),
-          height: 150,
-        ),
-      ),
-    ),
-    const SizedBox(
-      width: 20,
-    ),
-    Expanded(
-      child: Column(
-        children: [
-          Text(
-            movie.title,
-            style: textTheme.headline5,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          Text(
-            movie.originalTitle,
-            style: textTheme.subtitle1,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-          Row(
-            children: [
-              const Icon(Icons.star_outline, size: 15, color: Colors.grey),
-              const SizedBox(width: 5),
-              Text(movie.voteAverage.toString(), style: textTheme.caption),
-            ],
-          ),
-        ],
-      ),
-    ),
-  ],
-)
-
-    );
+        margin: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Row(
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  placeholder: AssetImage('assets/loading.gif'),
+                  image: NetworkImage(drink.strDrinkThumb),
+                  height: 150,
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  Text(
+                    drink.strDrink,
+                    style: textTheme.headline5,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
+                  Text(
+                    drink.strDrink,
+                    style: textTheme.subtitle1,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
+                  Row(
+                    children: [
+                      const Icon(Icons.star_outline,
+                          size: 15, color: Colors.grey),
+                      const SizedBox(width: 5),
+                      Text('12', style: textTheme.caption),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 }
 
 class _Overview extends StatelessWidget {
-  final Movie movie;
+  final Drink drink;
 
-  const _Overview({super.key, required this.movie});
+  const _Overview({super.key, required this.drink});
 
-  
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Text(
-        movie.overview,
+        drink.strDrinkThumb,
         textAlign: TextAlign.justify,
         style: Theme.of(context).textTheme.subtitle1,
       ),

@@ -1,8 +1,8 @@
+/*
 import 'package:flutter/material.dart';
-import 'package:movies_app/models/cast.dart';
-import 'package:movies_app/providers/movies_provider.dart';
+import 'package:movies_app/models/models.dart';
+import 'package:movies_app/providers/cocktails_provider.dart';
 import 'package:provider/provider.dart';
-
 
 class CastingCards extends StatelessWidget {
   final int id;
@@ -11,7 +11,7 @@ class CastingCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
+    final moviesProvider = Provider.of<CocktailsProvider>(context, listen: false);
 
     // You need to return the FutureBuilder widget here
     return FutureBuilder(
@@ -40,44 +40,42 @@ class CastingCards extends StatelessWidget {
   }
 }
 
-
 class _CastCard extends StatelessWidget {
   final Cast casting;
   const _CastCard({super.key, required this.casting});
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      width: 110,
-      height: 100,
-      // color: Colors.green,
-      child: ListView(children: [
-        Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: FadeInImage(
-              placeholder: AssetImage('assets/no-image.jpg'),
-              image: NetworkImage(casting.fullProfilePath),
-              height: 140,
-              width: 100,
-              fit: BoxFit.cover,
-            ),
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        width: 110,
+        height: 100,
+        // color: Colors.green,
+        child: ListView(children: [
+          Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  placeholder: AssetImage('assets/no-image.jpg'),
+                  image: NetworkImage(casting.fullProfilePath),
+                  height: 140,
+                  width: 100,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(
+                casting.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              )
+            ],
           ),
-          const SizedBox(
-            height: 5,
-          ),
-          Text(
-            casting.name,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-          )
-        ],
-      ),
-      ])
-    );
+        ]));
   }
 }
+*/

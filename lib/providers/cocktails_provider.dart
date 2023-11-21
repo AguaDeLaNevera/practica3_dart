@@ -12,7 +12,7 @@ class CocktailsProvider extends ChangeNotifier {
   CocktailsProvider() {
     print('Movies Provider inicialitzat!');
     this.getOnDisplayedCocktails();
-    this.getOnDisplayedNoAlcoholCocktails();
+    //this.getOnDisplayedNoAlcoholCocktails();
   }
 
   getOnDisplayedCocktails() async {
@@ -23,11 +23,11 @@ class CocktailsProvider extends ChangeNotifier {
     var jsonResponse = convert.jsonDecode(result.body) as Map<String, dynamic>;
     final cocktailResponse = CocktailResponse.fromJson(jsonResponse);
 
-    onDisplayCocktail = cocktailResponse.Drinks;
+    onDisplayCocktail = cocktailResponse.drinks;
     notifyListeners();
   }
 
-  getOnDisplayedNoAlcoholCocktails() async {
+  /* getOnDisplayedNoAlcoholCocktails() async {
     var url = Uri.https(_baseUrl, '/1/filter.php?a=Non_Alcoholic');
 
     // Await the http get response, then decode the json-formatted response.
@@ -51,4 +51,5 @@ class CocktailsProvider extends ChangeNotifier {
 
     return castingInfo.cast;
   }
+  */
 }
