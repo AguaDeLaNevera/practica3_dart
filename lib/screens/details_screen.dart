@@ -23,7 +23,7 @@ class DetailsScreen extends StatelessWidget {
                 _Overview(
                   drink: beguda,
                 ),
-                CastingCards(beguda.idDrink as int),
+                //CastingCards(beguda.idDrink as int),
               ],
             ),
           ),

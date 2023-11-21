@@ -7,11 +7,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cocktailsProvider = Provider.of<CocktailsProvider>(context);
-
-    //print(cocktailsProvider.onDisplayCocktail);
+    print(cocktailsProvider.onDisplayCocktail);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cartellera'),
+        title: const Text('Cocktails'),
         elevation: 0,
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined))
