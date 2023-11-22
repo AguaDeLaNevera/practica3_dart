@@ -6,13 +6,13 @@ import 'package:movies_app/models/models.dart';
 class CocktailsProvider extends ChangeNotifier {
   List<Drink> onDisplayCocktail = [];
   List<Drink> onDisplayNoAlcohol = [];
-  List<FullDrink> fullDrink = [];
+  List<Drink> onDisplayRecommendations = [];
 
   CocktailsProvider() {
     print('cocktailsprovider here');
     this.getOnDisplayedCocktails();
     this.getOnDisplayedNoAlcoholCocktails();
-    this.getOnDisplayedFullDrink();
+
   }
 
   getOnDisplayedCocktails() async {
@@ -40,30 +40,16 @@ class CocktailsProvider extends ChangeNotifier {
     onDisplayNoAlcohol = cocktailResponse.drinks;
     notifyListeners();
   }
-  getOnDisplayedFullDrink() async {
-    var url = Uri.https('www.thecocktaildb.com', '/api/json/v1/1/lookup.php',
-        {'i': '11007'});
+  getOnDisplayedRecommendations() async {
+    var url = Uri.https('www.thecocktaildb.com', '/api/json/v1/1/filter.php',
+        {'c': 'Ordinary_Drink'});
 
     // Await the http get response, then decode the json-formatted response.
     final result = await http.get(url);
     var jsonResponse = convert.jsonDecode(result.body) as Map<String, dynamic>;
-    final fullDrinkResponse = FullDrinkResponse.fromJson(jsonResponse);
+    final cocktailResponse = CocktailResponse.fromJson(jsonResponse);
 
-    fullDrink = fullDrinkResponse.drinks;
+    onDisplayRecommendations = cocktailResponse.drinks;
     notifyListeners();
   }
-/*
-  Future<List<Cast>> getMovieCast(int id) async {
-    var url = Uri.https(_baseUrl, '/3/movie/$id/credits', {
-      'api_key': _apiKey,
-    });
-
-    final result = await http.get(url);
-    final castingInfo = CreditsResponse.fromJson(result.body);
-
-    casting[id] = castingInfo.cast;
-
-    return castingInfo.cast;
-  }
-  */
 }

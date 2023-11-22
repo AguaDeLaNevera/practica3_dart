@@ -5,8 +5,8 @@ import 'package:movies_app/widgets/widgets.dart';
 class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: Canviar després per una instància de Peli
     final Drink beguda = ModalRoute.of(context)?.settings.arguments as Drink;
+
 
     return Scaffold(
       body: CustomScrollView(
@@ -136,7 +136,7 @@ class _Overview extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Text(
         //here replace for details
-        drink.strDrinkThumb,
+        drink.strDrink,
         textAlign: TextAlign.justify,
         style: Theme.of(context).textTheme.subtitle1,
       ),

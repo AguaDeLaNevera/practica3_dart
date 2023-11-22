@@ -8,7 +8,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cocktailsProvider = Provider.of<CocktailsProvider>(context);
-    print(cocktailsProvider.getOnDisplayedFullDrink());
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cocktails'),
