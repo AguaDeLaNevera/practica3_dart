@@ -190,7 +190,7 @@ class _Overview extends StatelessWidget {
     return drinkDescriptions[randomIndex];
   }
 }
-
+/*
 class GetDetails extends StatelessWidget {
   final int id;
 
@@ -212,4 +212,4 @@ class GetDetails extends StatelessWidget {
         //i need another widget here  
     );
   }
-}
+}*/
