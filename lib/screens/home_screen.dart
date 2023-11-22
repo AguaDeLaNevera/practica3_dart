@@ -4,16 +4,24 @@ import 'package:movies_app/providers/cocktails_provider.dart';
 import 'package:movies_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
+// Pantalla principal que mostra begudes alcohòliques i no alcohòliques
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Obtenim l'instància del proveïdor de begudes mitjançant Provider
     final cocktailsProvider = Provider.of<CocktailsProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cocktails'),
         elevation: 0,
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined))
+          IconButton(
+            onPressed: () {
+              // Funcionalitat del botó de cerca (encara per implementar)
+            },
+            icon: const Icon(Icons.search_outlined),
+          )
         ],
       ),
       body: SingleChildScrollView(
@@ -21,22 +29,17 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                "Alcoholic drinks",
+                "Begudes alcohòliques",
                 style: TextStyle(
-                  fontSize: 24, // Adjust the font size as needed
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black, // Change the color if desired
-                  // You can also add other styling properties such as letterSpacing, fontFamily, etc.
+                  color: Colors.black,
                 ),
               ),
-              // Targetes principals
+              // Widget que mostra un carrusel de targetes per a begudes alcohòliques
               CardSwiper(drinks: cocktailsProvider.onDisplayCocktail),
+              // Widget que mostra un carrusel de targetes per a begudes no alcohòliques
               MovieSlider(drinks: cocktailsProvider.onDisplayNoAlcohol),
-              // Slider de pel·licules
-              //MovieSlider(movies: cocktailsProvider.onPopular),
-              // Poodeu fer la prova d'afegir-ne uns quants, veureu com cada llista és independent
-              // MovieSlider(),
-              // MovieSlider(),
             ],
           ),
         ),

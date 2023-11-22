@@ -4,28 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/models/models.dart';
 import 'package:movies_app/widgets/widgets.dart';
 
+// Pantalla de detalls per a una beguda específica
 class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Drink beguda = ModalRoute.of(context)?.settings.arguments as Drink;
+    // Obtenim la beguda passada com a argument de la ruta
+    final Drink drink = ModalRoute.of(context)?.settings.arguments as Drink;
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _CustomAppBar(
-            drink: beguda,
-          ),
+          // Appbar personalitzada que mostra la imatge de la beguda com a fons
+          _CustomAppBar(drink: drink),
+          // Llista de widgets a mostrar en la pantalla de detalls
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                _PosterAndTitile(
-                  drink: beguda,
-                ),
-                _Overview(
-                  drink: beguda,
-                ),
+                // Poster i títol de la beguda
+                _PosterAndTitile(drink: drink),
+                // Resum i descripció de la beguda
+                _Overview(drink: drink),
+                // Secció "Potser també t'agradarà"
                 Text(
-                  "You may also like",
+                  "Potser també t'agradarà",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 24,
@@ -33,7 +34,8 @@ class DetailsScreen extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                CastingCards(int.parse(beguda.idDrink)),
+                // Targetes de recomanacions relacionades amb la beguda actual
+                CastingCards(int.parse(drink.idDrink)),
               ],
             ),
           ),
@@ -43,10 +45,12 @@ class DetailsScreen extends StatelessWidget {
   }
 }
 
+// Appbar personalitzada amb la imatge de la beguda com a fons
 class _CustomAppBar extends StatelessWidget {
   final Drink drink;
 
-  const _CustomAppBar({super.key, required this.drink});
+  const _CustomAppBar({Key? key, required this.drink});
+
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -77,63 +81,66 @@ class _CustomAppBar extends StatelessWidget {
   }
 }
 
+// Widget que mostra el poster i el títol de la beguda
 class _PosterAndTitile extends StatelessWidget {
   final Drink drink;
 
-  const _PosterAndTitile({super.key, required this.drink});
+  const _PosterAndTitile({Key? key, required this.drink});
 
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
-        margin: const EdgeInsets.only(top: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Row(
-          children: [
-            Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: FadeInImage(
-                  placeholder: AssetImage('assets/loading.gif'),
-                  image: NetworkImage(drink.strDrinkThumb),
-                  height: 150,
+      margin: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        children: [
+          // Poster de la beguda
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: FadeInImage(
+                placeholder: AssetImage('assets/loading.gif'),
+                image: NetworkImage(drink.strDrinkThumb),
+                height: 150,
+              ),
+            ),
+          ),
+          const SizedBox(width: 20),
+          // Títol, subtítol i puntuació de la beguda
+          Expanded(
+            child: Column(
+              children: [
+                Text(
+                  drink.strDrink,
+                  style: textTheme.headline5,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                 ),
-              ),
+                Text(
+                  drink.strDrink,
+                  style: textTheme.subtitle1,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                Row(
+                  children: [
+                    const Icon(Icons.star_outline,
+                        size: 15, color: Colors.grey),
+                    const SizedBox(width: 5),
+                    Text('12', style: textTheme.caption),
+                  ],
+                ),
+              ],
             ),
-            const SizedBox(
-              width: 20,
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  Text(
-                    drink.strDrink,
-                    style: textTheme.headline5,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                  Text(
-                    drink.strDrink,
-                    style: textTheme.subtitle1,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                  Row(
-                    children: [
-                      const Icon(Icons.star_outline,
-                          size: 15, color: Colors.grey),
-                      const SizedBox(width: 5),
-                      Text('12', style: textTheme.caption),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }
 
+// Widget que mostra el resum i la descripció de la beguda
 class _Overview extends StatelessWidget {
   final Drink drink;
 
@@ -151,30 +158,33 @@ class _Overview extends StatelessWidget {
     );
   }
 
+  // Mètode que retorna una descripció aleatòria per a la beguda
   String description(Drink drink) {
     List<String> drinkDescriptions = [
-      "A refreshing blend of tropical fruits and citrus flavors, perfect for a hot summer day.",
-      "A rich and velvety chocolate-infused concoction, a treat for any chocolate lover.",
-      "An energizing mix of citrus and herbs, creating a zesty and invigorating beverage.",
-      "A smooth and creamy blend of vanilla and caramel, reminiscent of a decadent dessert.",
-      "A vibrant and tangy fusion of berries, creating a burst of fruity goodness.",
-      "A warming blend of spices and herbs, perfect for cozying up on a chilly evening.",
-      "A tropical paradise in a glass, with hints of coconut, pineapple, and a touch of rum.",
-      "A sophisticated combination of espresso and frothy milk, a coffee lover's delight.",
-      "A bubbly and effervescent drink with a hint of citrus, perfect for celebrations.",
-      "A minty and refreshing beverage that leaves a cool sensation with every sip.",
-      "A sweet and indulgent mix of caramel, toffee, and a touch of sea salt.",
-      "A bold and robust infusion of tea, accented with spices for a flavorful experience.",
-      "A fruity medley of melons, berries, and citrus, creating a burst of summer flavors.",
-      "A classic concoction of soda and syrup, with a twist of your favorite fruit flavor.",
-      "An exotic blend of spices and fruit juices, transporting you to distant lands.",
-      "A creamy and dreamy blend of coconut and pineapple, like a tropical escape in a glass.",
-      "A vibrant and colorful drink with layers of fruit juices, creating a visually stunning experience.",
-      "A herbal infusion with soothing chamomile and hints of lavender, perfect for relaxation.",
-      "A fizzy and citrusy soda with a splash of grenadine, creating a sweet and tart combination.",
-      "A sophisticated mix of whiskey, bitters, and a sugar cube, for a timeless classic cocktail."
-    ];
+      "Una refrescant barreja de fruites tropicals i sabors cítrics, perfecta per a un dia calorós d'estiu.",
+      "Una barreja rica i avelletada d'infusió de xocolata, una delícia per als amants del xocolata.",
+      "Una barreja energètica de cítrics i herbes, creant una beguda agredolça i vigoritzant.",
+      "Una barreja suau i cremosa de vainilla i caramel, reminiscent d'un postres decadent.",
+      "Una fusió vibrants i àcida de mores, creant una explosió de bondat fruitera.",
+      "Una barreja càlida d'espècies i herbes, perfecta per acollir-se en una nit fresca.",
+      "Un paradís tropical en una copa, amb notes de coco, pinya i un toc de rom.",
+      "Una combinació sofisticada d'espresso i llet escumada, una delícia per als amants del café.",
+      "Una beguda efervescent amb un toc de cítrics, perfecta per a celebracions.",
+      "Una beguda mentolada i refrescant que deixa una sensació fresca amb cada glop.",
+      "Una barreja dolça i indulgent de caramel, toffee i una mica de sal marina.",
+      "Una infusió robusta i intensa de te, accentuada amb espècies per a una experiència amb sabor.",
+      "Una melodia fruitera de melons, mores i cítrics, creant una explosió de sabors estiuencs.",
+      "Una concoctió clàssica de soda i xarop, amb un toc del teu sabor de fruita preferit.",
+      "Una barreja exòtica d'espècies i sucs de fruita, transportant-te a terres llunyanes.",
+      "Una barreja cremosa i somiadora de coco i pinya, com una escapada tropical en una copa.",
+      "Una beguda vibrants i colorida amb capes de sucs de fruita, creant una experiència visual impressionant.",
+      "Una infusió herbal amb suau camamilla i notes de lavanda, perfecta per a la relaxació.",
+      "Una beguda efervescent i cítrica amb un raig de granadina, creant una combinació dolça i àcida.",
+      "Una mescla sofisticada de whisky, bitter i un cub de sucre, per a un còctel clàssic atemporal."
+    ]; // Obtenim un índex aleatori basat en el valor hash de la beguda
     int randomIndex = drink.hashCode % drinkDescriptions.length;
+
+// Retornem la descripció aleatòria
     return drinkDescriptions[randomIndex];
   }
 }
