@@ -14,6 +14,8 @@ class CocktailsProvider extends ChangeNotifier {
   // Mapa que emmagatzema les recomanacions de begudes per a cada beguda
   Map<int, List<Drink>> onDisplayRecommendations = {};
 
+  Map<int, FullDrink> detallsBeguda = {};
+
   // Constructor del proveïdor
   CocktailsProvider() {
     // Inicialitza la càrrega de begudes alcohòliques i no alcohòliques al moment de la creació
@@ -61,5 +63,17 @@ class CocktailsProvider extends ChangeNotifier {
     // Emmagatzema les recomanacions per a la beguda específica i retorna la llista
     onDisplayRecommendations[id] = cocktailResponse.drinks;
     return cocktailResponse.drinks;
+  }
+
+  Future<void> getDetallsBeguda(int id) async {
+    var url = Uri.https(
+        'www.thecocktaildb.com', '/api/json/v1/1/lookup.php', {'i': id});
+
+    final result = await http.get(url);
+    var jsonResponse = convert.jsonDecode(result.body) as Map<String, dynamic>;
+    final fullCocktailResponse = FullCocktailResponse.fromJson(jsonResponse);
+
+    detallsBeguda[id] = fullCocktailResponse.fullDrinks[1];
+    notifyListeners();
   }
 }

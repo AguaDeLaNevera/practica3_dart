@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:movies_app/models/models.dart';
+import 'package:movies_app/providers/cocktails_provider.dart';
 import 'package:movies_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 // Pantalla de detalls per a una beguda específica
 class DetailsScreen extends StatelessWidget {
@@ -184,7 +186,30 @@ class _Overview extends StatelessWidget {
     ]; // Obtenim un índex aleatori basat en el valor hash de la beguda
     int randomIndex = drink.hashCode % drinkDescriptions.length;
 
-// Retornem la descripció aleatòria
+    // Retornem la descripció aleatòria
     return drinkDescriptions[randomIndex];
+  }
+}
+
+class GetDetails extends StatelessWidget {
+  final int id;
+
+  const GetDetails(this.id);
+
+  @override
+  Widget build(BuildContext context) {
+    // Obtenim l'instància del proveïdor de begudes mitjançant Provider
+    final cocktailsProvider =
+        Provider.of<CocktailsProvider>(context, listen: false);
+    FullDrink fullDrink;
+    // Utilitzem un FutureBuilder per gestionar la càrrega de les recomanacions de begudes
+    return Visibility(
+      visible: cocktailsProvider.detallsBeguda[1] == null,
+      child: Container(
+        child: Center(child: CircularProgressIndicator()),
+      ),
+      replacement:
+        //i need another widget here  
+    );
   }
 }
