@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/models/models.dart';
 import 'package:movies_app/providers/cocktails_provider.dart';
 import 'package:movies_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +8,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cocktailsProvider = Provider.of<CocktailsProvider>(context);
-    print(cocktailsProvider.onDisplayCocktail);
+    print(cocktailsProvider.getOnDisplayedFullDrink());
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cocktails'),
@@ -22,7 +23,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               // Targetes principals
               CardSwiper(drinks: cocktailsProvider.onDisplayCocktail),
-
+              MovieSlider(drinks: cocktailsProvider.onDisplayNoAlcohol),
               // Slider de pel·licules
               //MovieSlider(movies: cocktailsProvider.onPopular),
               // Poodeu fer la prova d'afegir-ne uns quants, veureu com cada llista és independent

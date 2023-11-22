@@ -39,7 +39,7 @@ class _CustomAppBar extends StatelessWidget {
   const _CustomAppBar({super.key, required this.drink});
   @override
   Widget build(BuildContext context) {
-    // Exactament igual que la AppBaer però amb bon comportament davant scroll
+    // Exactament igual que la AppBar però amb bon comportament davant scroll
     return SliverAppBar(
       backgroundColor: Colors.indigo,
       expandedHeight: 200,
@@ -135,6 +135,7 @@ class _Overview extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Text(
+        //here replace for details
         drink.strDrinkThumb,
         textAlign: TextAlign.justify,
         style: Theme.of(context).textTheme.subtitle1,

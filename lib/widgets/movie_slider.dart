@@ -5,14 +5,14 @@ import 'package:movies_app/models/models.dart';
 
 class MovieSlider extends StatelessWidget {
   // const MovieSlider({Key? key}) : super(key: key);
-  final List<Drink> movies;
+  final List<Drink> drinks;
 
-  const MovieSlider({super.key, required this.movies});
+  const MovieSlider({super.key, required this.drinks});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    if (this.movies.length == 0) {
+    if (this.drinks.length == 0) {
       return Container(
         width: double.infinity,
         height: size.height * 0.5,
@@ -31,7 +31,7 @@ class MovieSlider extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text('Populars',
+            child: Text('Non-alcoholic drinks',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ),
           SizedBox(
@@ -40,9 +40,9 @@ class MovieSlider extends StatelessWidget {
           Expanded(
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: movies.length,
+                itemCount: drinks.length,
                 itemBuilder: (_, int index) =>
-                    _MoviePoster(beguda: movies[index])),
+                    _MoviePoster(beguda: drinks[index])),
           )
         ],
       ),
