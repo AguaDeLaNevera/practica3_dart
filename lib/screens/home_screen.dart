@@ -20,6 +20,15 @@ class HomeScreen extends StatelessWidget {
         child: Container(
           child: Column(
             children: [
+              Text(
+                "Alcoholic drinks",
+                style: TextStyle(
+                  fontSize: 24, // Adjust the font size as needed
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black, // Change the color if desired
+                  // You can also add other styling properties such as letterSpacing, fontFamily, etc.
+                ),
+              ),
               // Targetes principals
               CardSwiper(drinks: cocktailsProvider.onDisplayCocktail),
               MovieSlider(drinks: cocktailsProvider.onDisplayNoAlcohol),

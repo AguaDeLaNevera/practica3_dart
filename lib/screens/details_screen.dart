@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:movies_app/models/models.dart';
 import 'package:movies_app/widgets/widgets.dart';
@@ -6,7 +8,6 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Drink beguda = ModalRoute.of(context)?.settings.arguments as Drink;
-
 
     return Scaffold(
       body: CustomScrollView(
@@ -23,7 +24,16 @@ class DetailsScreen extends StatelessWidget {
                 _Overview(
                   drink: beguda,
                 ),
-                //CastingCards(beguda.idDrink as int),
+                Text(
+                  "You may also like",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                CastingCards(int.parse(beguda.idDrink)),
               ],
             ),
           ),
@@ -39,7 +49,6 @@ class _CustomAppBar extends StatelessWidget {
   const _CustomAppBar({super.key, required this.drink});
   @override
   Widget build(BuildContext context) {
-    // Exactament igual que la AppBar però amb bon comportament davant scroll
     return SliverAppBar(
       backgroundColor: Colors.indigo,
       expandedHeight: 200,
@@ -128,18 +137,44 @@ class _PosterAndTitile extends StatelessWidget {
 class _Overview extends StatelessWidget {
   final Drink drink;
 
-  const _Overview({super.key, required this.drink});
+  const _Overview({Key? key, required this.drink}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Text(
-        //here replace for details
-        drink.strDrink,
+        description(drink),
         textAlign: TextAlign.justify,
         style: Theme.of(context).textTheme.subtitle1,
       ),
     );
+  }
+
+  String description(Drink drink) {
+    List<String> drinkDescriptions = [
+      "A refreshing blend of tropical fruits and citrus flavors, perfect for a hot summer day.",
+      "A rich and velvety chocolate-infused concoction, a treat for any chocolate lover.",
+      "An energizing mix of citrus and herbs, creating a zesty and invigorating beverage.",
+      "A smooth and creamy blend of vanilla and caramel, reminiscent of a decadent dessert.",
+      "A vibrant and tangy fusion of berries, creating a burst of fruity goodness.",
+      "A warming blend of spices and herbs, perfect for cozying up on a chilly evening.",
+      "A tropical paradise in a glass, with hints of coconut, pineapple, and a touch of rum.",
+      "A sophisticated combination of espresso and frothy milk, a coffee lover's delight.",
+      "A bubbly and effervescent drink with a hint of citrus, perfect for celebrations.",
+      "A minty and refreshing beverage that leaves a cool sensation with every sip.",
+      "A sweet and indulgent mix of caramel, toffee, and a touch of sea salt.",
+      "A bold and robust infusion of tea, accented with spices for a flavorful experience.",
+      "A fruity medley of melons, berries, and citrus, creating a burst of summer flavors.",
+      "A classic concoction of soda and syrup, with a twist of your favorite fruit flavor.",
+      "An exotic blend of spices and fruit juices, transporting you to distant lands.",
+      "A creamy and dreamy blend of coconut and pineapple, like a tropical escape in a glass.",
+      "A vibrant and colorful drink with layers of fruit juices, creating a visually stunning experience.",
+      "A herbal infusion with soothing chamomile and hints of lavender, perfect for relaxation.",
+      "A fizzy and citrusy soda with a splash of grenadine, creating a sweet and tart combination.",
+      "A sophisticated mix of whiskey, bitters, and a sugar cube, for a timeless classic cocktail."
+    ];
+    int randomIndex = drink.hashCode % drinkDescriptions.length;
+    return drinkDescriptions[randomIndex];
   }
 }

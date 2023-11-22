@@ -1,4 +1,3 @@
-/*
 import 'package:flutter/material.dart';
 import 'package:movies_app/models/models.dart';
 import 'package:movies_app/providers/cocktails_provider.dart';
@@ -11,12 +10,13 @@ class CastingCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final moviesProvider = Provider.of<CocktailsProvider>(context, listen: false);
+    final cocktailsProvider =
+        Provider.of<CocktailsProvider>(context, listen: false);
 
     // You need to return the FutureBuilder widget here
     return FutureBuilder(
-      future: moviesProvider.getMovieCast(id),
-      builder: (BuildContext context, AsyncSnapshot<List<Cast>> snapshot) {
+      future: cocktailsProvider.getOnDisplayedRecommendations(id),
+      builder: (BuildContext context, AsyncSnapshot<List<Drink>> snapshot) {
         if (!snapshot.hasData) {
           return Container(
             child: Center(child: CircularProgressIndicator()),
@@ -26,7 +26,7 @@ class CastingCards extends StatelessWidget {
           return Container(
             margin: const EdgeInsets.only(bottom: 30),
             width: double.infinity,
-            height: 180,
+            height: 280,
             child: ListView.builder(
               itemCount: casting.length,
               scrollDirection: Axis.horizontal,
@@ -41,7 +41,7 @@ class CastingCards extends StatelessWidget {
 }
 
 class _CastCard extends StatelessWidget {
-  final Cast casting;
+  final Drink casting;
   const _CastCard({super.key, required this.casting});
 
   @override
@@ -58,7 +58,7 @@ class _CastCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: FadeInImage(
                   placeholder: AssetImage('assets/no-image.jpg'),
-                  image: NetworkImage(casting.fullProfilePath),
+                  image: NetworkImage(casting.strDrinkThumb),
                   height: 140,
                   width: 100,
                   fit: BoxFit.cover,
@@ -68,7 +68,7 @@ class _CastCard extends StatelessWidget {
                 height: 5,
               ),
               Text(
-                casting.name,
+                casting.strDrink,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
@@ -78,4 +78,3 @@ class _CastCard extends StatelessWidget {
         ]));
   }
 }
-*/
